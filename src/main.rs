@@ -21,12 +21,9 @@ fn main() {
 
     // Realistic scenario: Cara is frequently unavailable on weekdays
     // (she works late shifts on Mon/Tue/Wed).
-    for week in 0..9 {
-        let _ = week;
-        scheduler.mark_unavailable(&cara, "monday");
-        scheduler.mark_unavailable(&cara, "tuesday");
-        scheduler.mark_unavailable(&cara, "wednesday");
-    }
+    scheduler.mark_unavailable(&cara, "monday");
+    scheduler.mark_unavailable(&cara, "tuesday");
+    scheduler.mark_unavailable(&cara, "wednesday");
 
     println!("=== Chore Scheduler: 9-Week Simulation ===");
     println!("Rules:");

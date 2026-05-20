@@ -87,13 +87,19 @@ fn cooldowns_decay_each_round() {
     let mut s = Scheduler::new();
     let people = vec![p("Alice"), p("Bob"), p("Cara")];
 
-    s.assign(&people, "dishes", "monday");
+    let first = s.assign(&people, "dishes", "monday").unwrap();
     s.assign(&people, "trash", "tuesday");
     s.assign(&people, "laundry", "wednesday");
 
-    for value in s.get_cooldowns().values() {
-        assert!(*value <= 2);
-    }
+    // After 3 assignments, the first person's cooldown should have decayed
+    // from 2 → 1 → 0 (decayed twice by the subsequent two assignments).
+    let first_cooldown = s.get_cooldowns().get(&first).copied().unwrap_or(0);
+    assert_eq!(first_cooldown, 0, "first assignee's cooldown should have fully decayed");
+
+    // The most recent assignee should still have cooldown = 2.
+    let cooldowns = s.get_cooldowns();
+    let max_cooldown = cooldowns.values().max().copied().unwrap_or(0);
+    assert_eq!(max_cooldown, 2, "most recent assignee should have cooldown of 2");
 }
 
 #[test]
