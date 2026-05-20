@@ -1,0 +1,9 @@
+[package]
+name = "chore-scheduler"
+version = "0.1.0"
+edition = "2021"
+description = "A fair chore rotation scheduler for roommates"
+
+[dependencies]
+
+[dev-dependencies]
